@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./img/RecipeLogo.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="./assets/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <title>ReciFree</title>
+</head>
+<body>
+
+    <!--- Navigation Bar -->
+    <div class="header">
+        <nav class="nav-bar">
+            <img src="./img/lg.JPG" class="brand-name">
+            <a href="#" class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </a>
+            <div class="menu-bar">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+        <!-- Search Bar -->
+        <div class="title" >Welcome to ReciFree</div>
+        <div class="search-wrapper">
+            <div class="fa fa-search"></div>
+            <input type="text" name=""  id="search" placeholder="Find a Recipe" onkeyup="search()">
+            <div class="fa fa-times" onclick="clearInput()" ></div>
+        </div>
+    </div>
+
+    <!-- Search Results -->
+        <div class="result">
+            <h1>Available Recipes  </h1>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="card-grid" >
+            <div class="food-list" id="food-list">
+                    <p id="none" style="display: none;">Sorry, the food you were looking for was not available.</p>
+                    <div class="card card-shadow">
+                        <div class="card-header card-image">
+                            <img src="./img/sel.jpg">
+                        </div>
+                        <div class="card-body" >
+                        <h3> Sel Roti </h3>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn" onclick="getRecipeDetails()">Get Recipe</button>
+                        </div>
+                    </div>
+                    <div class="card card-shadow">
+                        <div class="card-header card-image">
+                            <img src="./img/momo.jpg">
+                        </div>
+                        <div class="card-body" >
+                        <h3> MOMO </h3>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn" onclick="get2ndRecipe()">Get Recipe</button>
+                        </div>
+                    </div>
+                    <div class="card card-shadow">
+                        <div class="card-header card-image">
+                            <img src="./img/bhaat.jpg">
+                        </div>
+                        <div class="card-body" >
+                            <h3>Daalbhaat</h3>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn" onclick="get3rdRecipe()">Get Recipe</button>
+                        </div>
+                    </div>
+                    <div class="card card-shadow">
+                        <div class="card-header card-image">
+                            <img src="./img/Omelette.webp">
+                        </div>
+                        <div class="card-body" >
+                            <h3>Omelette</h3>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn" onclick="get4thRecipe()">Get Recipe</button>
+                        </div>
+                    </div>
+                    <div class="card card-shadow">
+                        <div class="card-header card-image">
+                            <img src="./img/chhoila.jpg">
+                        </div>
+                        <div class="card-body" >
+                        <h3> Buff Chhoila </h3>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn" onclick="get5thRecipe()">Get Recipe</button>
+                        </div>
+                    </div>
+                    <div class="card card-shadow">
+                        <div class="card-header card-image">
+                            <img src="./img/puri.jpg">
+                        </div>
+                        <div class="card-body" >
+                        <h3> Puri Tarkari</h3>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn" onclick="get6thRecipe()">Get Recipe</button>
+                        </div>
+                    </div>
+                    <div class="card card-shadow">
+                        <div class="card-header card-image">
+                            <img src="./img/biryani.jpg">
+                        </div>
+                        <div class="card-body" >
+                        <h3>Chicken Biryani</h3>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn" onclick="get7thRecipe()">Get Recipe</button>
+                        </div>
+                    </div>
+                    <div class="card card-shadow">
+                        <div class="card-header card-image">
+                            <img src="./img/Burger.webp">
+                        </div>
+                        <div class="card-body" >
+                        <h3>Chicken Burger</h3>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn" onclick="get8thRecipe()">Get Recipe</button>
+                        </div>
+                    </div>
+                    <div class="card card-shadow">
+                        <div class="card-header card-image">
+                            <img src="./img/chatpate.jpg">
+                        </div>
+                        <div class="card-body" >
+                        <h3>Chatpate</h3>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn" onclick="get9thRecipe()">Get Recipe</button>
+                        </div>
+                    </div>
+                    <div class="card card-shadow">
+                        <div class="card-header card-image">
+                            <img src="./img/mula.jpg">
+                        </div>
+                        <div class="card-body" >
+                        <h3>Radish Pickle</h3>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn" onclick="get10thRecipe()">Get Recipe</button>
+                        </div>
+                    </div>
+                    <div class="card card-shadow">
+                        <div class="card-header card-image">
+                            <img src="./img/dalle.jpg">
+                        </div>
+                        <div class="card-body" >
+                        <h3>Dalle Khursani pickle</h3>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn" onclick="get11thRecipe()">Get Recipe</button>
+                        </div>
+                    </div>
+            </div> 
+
+            <!--Ending of Main Content-->
+
+            <!--Recipe Details-->
+            <div class = "meal-detail" id="meal-detail">
+                <!-- recipe close btn -->
+                <button type = "button" class = "btn recipe-close-btn" id = "recipe-close-btn" onclick="closeBtn()">
+                    <i class ="fas fa-times"></i>
+                </button>
+
+                <!-- recipe details -->
+                <div class="meal-content">
+                    <h2 class="meal-name">Sisig</h2>
+                    <div class="meal-about">
+                        <h3 class="meal-title-about">About Meal</h3>
+                        <p class="meal-descript-about"> Sel Roti is a traditional Nepalese sweet ring-shaped bread prepared during Dashain and Tihar festivals. </p>
+                    </div>
+                    <div class = "meal-instruct">
+                        <h3>Ingredients:</h3>
+                        <p><br>1/2 cup Rice
+                            <br>2 tablespoons Sugar
+                            <br>2 tablespoons Ghee
+                            <br>1 tablespoon Rice flour
+                            <br>1/4 teaspoon Cardamom Powder (Elaichi)
+                            <br>2 tablespoons Water , + water for soaking rice
+                            <br>Oil , as required for deep frying
+                        </p>
+                        <h3>Instruction:</h3>
+                        <p><br>To begin making the Sel Roti recipe, wash and soak the rice overnight.  
+
+                            <br>Next day, drain the excess water from the rice. Take drained rice in a mixer jar and blend to a fine paste.
+                            
+                            <br>Take the paste in a bowl and add sugar, ghee, rice flour and cardamom powder to it. 
+                            
+                            <br>Gradually add about 1-2 tablespoon water to it and whisk well till sugar dissolves completely. Batter should be of a thick consistency.
+                            
+                            <br>Heat oil in a wide pan. Using a ladle, pour the batter in a circle shape into the hot oil.
+                            
+                            <br>Reduce the flame to medium and let it cook on one side. Flip it to the other side using a tong. Fry till it gets light golden brown from both sides.
+                            
+                            <br>Remove and drain on an absorbent paper. Store them in an air tight container once they cool down completely.
+                            
+                            <br>Sel Roti can be served as a tea-time snack with tea/coffee or other beverages.</p>
+                
+                    </div>
+                    <div class = "meal-img">
+                        <img src = "./img/sel.jpg" alt = "">
+                      </div>
+                      <div class = "meal-link">
+                        <a href="https://www.youtube.com/watch?v=e_c3sOPrFOk" class="meal-link-btn">Watch Video</a>
+                    </div>
+                </div>
+            </div>
+            <div class = "second-meal-detail" id="second-meal-detail">
+                <!-- recipe close btn -->
+                <button type = "button" class = "btn recipe-close-btn" id = "recipe-close-btn" onclick="closeBtn()">
+                    <i class ="fas fa-times"></i>
+                </button>
+
+                <!-- recipe details -->
+                <div class="meal-content">
+                    <h2 class="meal-name">MOMO</h2>
+                    <div class="meal-about">
+                        <h3 class="meal-title-about">About Meal</h3>
+                        <p class="meal-descript-about">Momo is a standout amongst the most mainstream dishes in Nepal. They are nibble-estimated dumplings made with a spoonful of stuffing wrapped in the batter. Momos are generally steamed, however, they are once in a while seared or steam-singed. The filling of meat or vegetables winds up succulent as it creates a seriously enhanced soup fixed inside the wrappers. </p>
+                    </div>
+                    <div class = "meal-instruct">
+                        <h3>Ingredients:</h3>
+                        <p><br>500 gm of minced meat
+                            <br>1 grated onion
+                            <br>Some finely chopped coriander
+                            <br>2 tablespoons of ginger and garlic paste each
+                            <br>Half a tablespoon of coriander powder
+                            <br>Half a tablespoon of turmeric
+                            <br>Half a tablespoon of cumin powder
+                            <br>2 tablespoons of grated chilli
+                            <br>2 tablespoons of vegetable oil
+                            <br>2 tablespoons of salt
+                            <br>1 kg of flour
+                        </p>
+                        <h3>Instruction:</h3>
+                        <p><br>Mix together the flour and 1 1/2 cups room temperature water in a bowl. Knead the dough well until it is medium-firm and flexible. Cover and let rest for 1 hour.
+                            <br>Meanwhile, mix together the chicken, cilantro, onions, garlic, ginger, cumin, 2 tablespoons salt and 1/2 teaspoon pepper in a bowl.
+                            <br>To make the wrappers: Break off 1/2 ounce of dough and forming it into a ball. Place the ball on a flat surface and roll it into a 4-inch round with a rolling pin. Repeat with the remaining dough.
+                            <br>Spray a steamer pan with cooking spray.
+                            <br>Place a tablespoon of the chicken filling in the middle of a wrapper. Holding the wrapper in your left hand. Use your right thumb and index finger to start pinching the edges of the wrapper together. Pinch and fold until the edges of the circle close up like a little satchel. Place the momo in the prepared steamer pan. Repeat with remaining wrappers and filling.
+                            <br>Fill the steamer pot halfway with water and bring to a boil. Set the steamer pan with the momos on top of the pot and cover with a tight lid. Steam the momos until cooked, 8 to 9 minutes.
+                            </p>
+                
+                    </div>
+                    <div class = "meal-img">
+                        <img src = "./img/momo.jpg" alt = "">
+                      </div>
+                      <div class = "meal-link">
+                        <a href="https://www.youtube.com/watch?v=uJlIncioJVI" class="meal-link-btn" >Watch Video</a>
+                    </div>
+                </div>
+            </div>  
+            <div class = "third-meal-detail" id="third-meal-detail">
+                <!-- recipe close btn -->
+                <button type = "button" class = "btn recipe-close-btn" id = "recipe-close-btn" onclick="closeBtn()">
+                    <i class ="fas fa-times"></i>
+                </button>
+
+                <!-- recipe details -->
+                <div class="meal-content">
+                    <h2 class="meal-name">Daal Bhaat</h2>
+                    <div class="meal-about">
+                        <h3 class="meal-title-about">About Meal</h3>
+                        <p class="meal-descript-about">Dal, Bhat, and Tarkari is Nepal’s national dish, embodying the essence of Nepalese cuisine. This traditional meal consists of lentil soup (Dal), steamed rice (Bhat), and a seasonal vegetable curry (Tarkari). The specific ingredients and flavors can vary depending on the season, region, and personal preferences. 
+                        </p>
+                    </div>
+                    <div class = "meal-instruct">
+                        <h3>Ingredients:</h3>
+                        <p><br><h4>For the Dal:</h4>
+                            1 cup red lentils (masoor dal)
+                            <br>1 tablespoon oil or ghee
+                            <br>1 teaspoon cumin seeds
+                            <br>1 teaspoon turmeric powder
+                            <br>1 teaspoon coriander powder
+                            <br>1 teaspoon garam masala
+                            <br>1 teaspoon salt (to taste)
+                            <br>4 cups water
+                            <br>1 medium tomato, chopped
+                            <br>1 tablespoon lemon juice (optional)
+                            <br><h4>For the Bhat:</h4>
+                            1 cup basmati or long-grain rice
+                            <br>2 cups water
+                            <br>1 teaspoon salt
+                            <br><h4>For the Tarkari:</h4>
+                            2 tablespoons oil
+                            <br>1 teaspoon cumin seeds
+                            <br>1 teaspoon mustard seeds
+                            <br>1 onion, finely chopped
+                            <br>2-3 cloves garlic, minced
+                            <br>1 tablespoon ginger, minced
+                            <br>2 medium potatoes, peeled and diced
+                            <br>1 cup cauliflower florets
+                            <br>1 cup green peas (fresh or frozen)
+                            <br>1 teaspoon turmeric powder
+                            <br>1 teaspoon cumin powder
+                            <br>1 teaspoon coriander powder
+                            <br>1 teaspoon chili powder (adjust to taste)
+                            <br>1 teaspoon salt (to taste)
+                            <br>1 cup water
+                            <br>1 tablespoon lemon juice (optional)
+                            <br>Fresh cilantro, chopped (for garnish)
+                            <br><h4>For the Achaar (Pickle):</h4>
+                            1 large daikon radish, peeled and sliced
+                            <br>2 tablespoons mustard seeds
+                            <br>1-2 tablespoons chili powder (to taste)
+                            <br>1 tablespoon salt
+                            <br>1 tablespoon lemon juice
+                            <br>1 tablespoon sugar (optional)
+                        </p>
+                        <h3>Instruction:</h3>
+                        <p><br>1. Prepare the Dal:
+
+                            <br>Rinse the lentils under cold water until the water runs clear.
+                            In a pot, heat oil or ghee over medium heat. Add cumin seeds and let them sizzle for a few seconds.
+                            Add chopped tomatoes and cook until soft.
+                            Add turmeric, coriander powder, and salt. Stir well.
+                            Add lentils and water, bring to a boil, then reduce heat and simmer for 20-25 minutes until lentils are tender.
+                            Stir in garam masala and lemon juice (if using). Adjust seasoning to taste.
+                            <br>
+                            2. Cook the Bhat:
+                            
+                            <br>Rinse the rice under cold water until the water runs clear.
+                            In a saucepan, combine rice, water, and salt. Bring to a boil.
+                            Reduce heat to low, cover, and simmer for 15-20 minutes until rice is cooked and water is absorbed.
+                            Fluff the rice with a fork before serving.
+                            <br>
+                            3. Prepare the Tarkari:
+                            
+                            <br>Heat oil in a large pan over medium heat. Add cumin and mustard seeds and cook until they start to pop.
+                            Add chopped onions and cook until golden brown.
+                            Stir in garlic and ginger, and cook for another minute.
+                            Add diced potatoes, cauliflower, and green peas. Stir well.
+                            Add turmeric, cumin, coriander, chili powder, and salt. Mix thoroughly.
+                            Pour in water and bring to a boil. Reduce heat, cover, and simmer for 15-20 minutes until vegetables are tender.
+                            Stir in lemon juice (if using) and garnish with fresh cilantro.
+                            <br>
+                            4. Make the Achaar:
+                            
+                            <br>In a bowl, combine sliced daikon, mustard seeds, chili powder, salt, lemon juice, and sugar (if using).
+                            Mix well and let it ferment at room temperature for 2-3 days. Stir occasionally.
+                            Store in the refrigerator once fermented.
+                            <br>
+                            5. Serve:
+                            
+                            <br>Serve a portion of dal, bhat, and tarkari on a plate.
+                            Add a side of achaar for extra flavor and spice.
+                            </p>
+                
+                    </div>
+                    <div class = "meal-img">
+                        <img src = "./img/bhaat.jpg" alt = "">
+                      </div>
+                      <div class = "meal-link">
+                        <a href="https://www.youtube.com/watch?v=iVEiDEJ5jq8" class="meal-link-btn" >Watch Video</a>
+                    </div>
+                </div>
+            </div>  
+            <div class = "four-meal-detail" id="four-meal-detail">
+                <!-- recipe close btn -->
+                <button type = "button" class = "btn recipe-close-btn" id = "recipe-close-btn" onclick="closeBtn()">
+                    <i class ="fas fa-times"></i>
+                </button>
+
+                <!-- recipe details -->
+                <div class="meal-content">
+                    <h2 class="meal-name">Omelette</h2>
+                    <div class="meal-about">
+                        <h3 class="meal-title-about">About Meal</h3>
+                        <p class="meal-descript-about">In cuisine, an omelette is a dish made from beaten eggs, fried with butter or oil in a frying pan. It is quite common for the omelette to be folded around fillings such as chives, vegetables, mushrooms, meat, cheese, onions or some combination of the above. 
+                        </p>
+                    </div>
+                    <div class = "meal-instruct">
+                        <h3>Ingredients:</h3>
+                        <p><br>3 eggs, beaten
+                            <br>1 tsp sunflower oil
+                            <br>1 tsp butter
+                        </p>
+                        <h3>Instruction:</h3>
+                        <p><br>1. Beat the eggs: Use two or three eggs per omelette, depending on how hungry you are. Beat the eggs lightly with a fork.
+                            2. Melt the butter: Use an 8-inch nonstick skillet for a 2-egg omelette, a 9-inch skillet for 3 eggs. Melt the butter over medium-low heat, and keep the temperature low and slow when cooking the eggs so the bottom doesn’t get too brown or overcooked.
+                            3. Add the eggs: Let the eggs sit for a minute, then use a heatproof silicone spatula to gently lift the cooked eggs from the edges of the pan. Tilt the pan to allow the uncooked eggs to flow to the edge of the pan.
+                            4. Fill the omelette: Add the filling—but don’t overstuff the omelette—when the eggs begin to set. Cook for a few more seconds
+                            5. Fold and serve: Fold the omelette in half. Slide it onto a plate with the help of a silicone spatula.
+                        </p>
+                
+                    </div>
+                    <div class = "meal-img">
+                        <img src = "./img/Omelette.webp" alt = "">
+                      </div>
+                      <div class = "meal-link">
+                        <a href="https://tinyurl.com/bde4yd4u" class="meal-link-btn" >Watch Video</a>
+                    </div>
+                </div>
+            </div>  
+            <div class = "five-meal-detail" id="five-meal-detail">
+                <!-- recipe close btn -->
+                <button type = "button" class = "btn recipe-close-btn" id = "recipe-close-btn" onclick="closeBtn()">
+                    <i class ="fas fa-times"></i>
+                </button>
+
+                <!-- recipe details -->
+                <div class="meal-content">
+                    <h2 class="meal-name">Chhoila</h2>
+                    <div class="meal-about">
+                        <h3 class="meal-title-about">About Meal</h3>
+                        <p class="meal-descript-about">Choila is a typical Newari appetizer that is incredibly hot, spicy and full of mouthwatering flavors. It is a non-vegetarian dish seasoned with authentic Newari spices.
+                        </p>
+                    </div>
+                    <div class = "meal-instruct">
+                        <h3>Ingredients:</h3>
+                        <p><br>500 g Buffalo meat
+                            <br>Chopped green garlic shoots
+                            <br>Salt to taste
+                            <br>Half cup mustard oil
+                            <br>One tablespoon cumin powder
+                            <br>Half tablespoon turmeric
+                            <br>Dry red chili paste
+                            <br>Finely chopped ginger-garlic
+                            <br>Ginger-garlic paste
+                            <br>Methi (Fenugreek seeds)
+                        </p>
+                        <h3>Instruction:</h3>
+                        <p><br>1: Firstly roast the meat in the heated pan or directly into the fire using a barbecue stick if you are making haku choila. OR else go for mana choila
+
+                            <br>2: For mana choila, take a pressure cooker put the meat and just a little water half a cup and let it cook for 2 whistles. And the further recipe is the same for both
+                            
+                            <br>3: Cut the meat into cubes in bite sizes but not too big and take it out in a wider bowl
+                            
+                            <br>4: Then make a red chili paste, for this take a wider pan, add some mustard oil and fry the chilies until it gets light brown and then grind it. It should be a thick paste
+                            
+                            <br>5: Add cumin powder, ginger-garlic paste and then mix it properly
+                            
+                            <br>6: Then take a pan and heat 4-5 tbsp of mustard oil and add 1 tbsp of methi or fenugreek seeds 
+                            
+                            <br>7: Remove it after the seeds get black and add some turmeric powder, then immediately pour it in choila
+                            
+                            <br>8: Add some chopped green garlic shoots and chopped ginger-garlic along with 5 tbsp of mustard oil and then mix it properly with hands. There is a popular saying that the real taste is in hands.
+                            
+                            <br>9: And it’s ready to serve 
+                        </p>
+                
+                    </div>
+                    <div class = "meal-img">
+                        <img src = "./img/chhoila.jpg" alt = "">
+                      </div>
+                      <div class = "meal-link">
+                        <a href="https://www.youtube.com/watch?v=Z6qqn6qoX6E" class="meal-link-btn" >Watch Video</a>
+                    </div>
+                </div>
+            </div> 
+            <div class = "six-meal-detail" id="six-meal-detail">
+                <!-- recipe close btn -->
+                <button type = "button" class = "btn recipe-close-btn" id = "recipe-close-btn" onclick="closeBtn()">
+                    <i class ="fas fa-times"></i>
+                </button>
+
+                <!-- recipe details -->
+                <div class="meal-content">
+                    <h2 class="meal-name">Puri Tarkari</h2>
+                    <div class="meal-about">
+                        <h3 class="meal-title-about">About Meal</h3>
+                        <p class="meal-descript-about">Puri Tarkari is a popular and beloved breakfast or snack dish in Nepal and parts of South Asia. It consists of puri, a deep-fried, unleavened bread, paired with tarkari, a flavorful vegetable curry. This combination is widely enjoyed during festivals, special occasions, and as a hearty weekend treat.
+                        </p>
+                    </div>
+                    <div class = "meal-instruct">
+                        <h3>Ingredients:</h3>
+                        <p><h4>For Tarkari</h4>
+                            <br>250 gm Potato
+                            <br>2 Tomato
+                            <br>1 Onion
+                            <br>1/4 cup Oil
+                            <br>1 Tbsp pickled carrots
+                            <br>1 Tbsp Red chilli powder
+                            <br>1/2 Tsp turmeric powder
+                            <br>1 Tsp Salt (adjust to taste)
+                            <br>1 Tsp cumin seeds
+                            <br>1 Tsp coriander seeds
+                            <br>1/2 Tsp Methidana
+                            <br>4-5 Sabut Lal Mirch
+                            <br>Few curry leaves
+                            <br>Green chillies
+                            <br>Green coriander leaves
+                            <br><h4>For Puri</h4>
+                            <br>2 cup Maida
+                            <br>1 cup Atta (flour)
+                            <br>1 Tsp Salt
+                            <br>2 Tbsp Sooji
+                            <br>2 Tbsp oil
+                            <br>Oil for frying
+                        </p>
+                        <h3>Instruction:</h3>
+                        <p><br>For tarkari. 
+                            <br>Peel & chop potatoes i cubes. Boil potato cubes and tomatoes together till they are half done. In a pot add oil. Add zeera, sabut dhania, kalonji, rai, methidana, curry patta, sabut lal mirch.After spluttering add finely chopped onions and fry to translucent. Take out tomato from water & add in onions. Mash and fry with spoon. Add gajar ka achar, lal mirch powder, haldi, salt and fry masala till oil seprates.
+
+                            
+                             Add half boiled potato cubes in masala and mix.add 1 cup potato water (from boiled pot) and let it cook on medium heat till potatoes are soft. Mash some potatoes to give blended texture. Cook til required consistency. Add hari mirch and hara dhania before serving.
+                            
+                            
+                            <br>For puri. 
+                            <br>Mix together maida, atta, soji, salt and sift well. Make a well in centre and gradually add water and knead the dough. Add oil in between. When a soft dough is kneaded. Cover it with samp towel/ kitchen Cloth and keep it for 1/2 hour. Make small balls (pairas) of dough. Knead each dough in round shape. Apply oil when rolling puris.deep fry in oil. Serve hot Puri Tarkari and Enjoy
+                        </p>
+                
+                    </div>
+                    <div class = "meal-img">
+                        <img src = "./img/puri.jpg" alt = "">
+                      </div>
+                      <div class = "meal-link">
+                        <a href="https://www.youtube.com/watch?v=vCBCvU9vLUA" class="meal-link-btn" >Watch Video</a>
+                    </div>
+                </div>
+            </div> 
+            <div class = "seven-meal-detail" id="seven-meal-detail">
+                <!-- recipe close btn -->
+                <button type = "button" class = "btn recipe-close-btn" id = "recipe-close-btn" onclick="closeBtn()">
+                    <i class ="fas fa-times"></i>
+                </button>
+
+                <!-- recipe details -->
+                <div class="meal-content">
+                    <h2 class="meal-name">Chicken Biryani</h2>
+                    <div class="meal-about">
+                        <h3 class="meal-title-about">About Meal</h3>
+                        <p class="meal-descript-about">Biryani’ or ‘Biriyani’ is ’a layered rice dish’ in its literal meaning. It is a dish with layers of rice corresponding with the layers of marinated meat/ chicken or veggies or paneer/ tofu, slow-cooked in a sealed pot.
+
+                            Aromatic spices lend exclusive flavors to the dish and infuse the dish with irresistible deliciousness.
+                        </p>
+                    </div>
+                    <div class = "meal-instruct">
+                        <h3>Ingredients:</h3>
+                        <p><li>600 grams Boneless chicken </li>
+                            <li>1 1/2 cups Basmati rice </li>
+                            <li>3 tablespoons Oil </li>
+                            <li>1 inch stick Cinnamon </li>
+                            <li>2   Bay leaves </li>
+                            <li>5-6   Cloves </li>
+                            <li>1 teaspoon Cumin seeds </li>
+                            <li>3-4   Green cardamoms </li>
+                            <li>2 medium Onions sliced</li>
+                            <li>3   Green chillies slit</li>
+                            <li>1/4 teaspoon Turmeric powder </li>
+                            <li>2 medium Tomatoes chopped</li>
+                            <li>to taste Salt </li>
+                            <li>3/4 teaspoon Ginger paste </li>
+                            <li>3/4 teaspoon Garlic paste </li>
+                            <li>1/2 teaspoon Red chilli powder </li>
+                            <li>1 cup Thick yogurt </li>
+                            <li>3 medium Onions sliced and fried </li>
+                            <li>1/2 teaspoon Garam masala powder </li>
+                            <li>1 inch piece Ginger cut into thin strips</li>
+                            <li>a few Fresh mint leaves torn</li>
+                            <li>a few Fresh coriander leaves torn</li>
+                            <li>1/2 cup Milk </li>
+                            <li>a few drops Rose water </li>
+                            <li>4   Eggs boiled and sliced</li>
+                            
+                        </p>
+                        <h3>Instruction:</h3>
+                        <p><li>Cut chicken in one inch pieces. Boil rice and set aside. Heat oil in a non-stick pan, add cinnamon, bay leaves, cloves, cumin seeds, green cardamoms and sauté for half a minute.</li>
+                            <li>Add sliced onions and sauté. Add slit green chillies and chicken cubes and continue to sauté. Add turmeric powder and mix. Add tomatoes and salt and mix. Add ginger-garlic paste, red chilli powder and yogurt. Mix well. </li>
+                            <li>Add half the fried brown onions. Add the boiled rice on top. Sprinkle garam masala powder, ginger strips, mint leaves and coriander leaves. Sprinkle milk, rose water and remaining browned onions.</li>
+                            <li>Cover and cook on low heat for about ten minutes. Garnish with the egg slices and serve hot. </li>
+                        </p>
+                
+                    </div>
+                    <div class = "meal-img">
+                        <img src = "./img/biryani.jpg" alt = "">
+                      </div>
+                      <div class = "meal-link">
+                        <a href="https://www.youtube.com/watch?v=0kxuFVG-Gh4" class="meal-link-btn" >Watch Video</a>
+                    </div>
+                </div>
+            </div> 
+            <div class = "eight-meal-detail" id="eight-meal-detail">
+                <!-- recipe close btn -->
+                <button type = "button" class = "btn recipe-close-btn" id = "recipe-close-btn" onclick="closeBtn()">
+                    <i class ="fas fa-times"></i>
+                </button>
+
+                <!-- recipe details -->
+                <div class="meal-content">
+                    <h2 class="meal-name">Chicken Burger</h2>
+                    <div class="meal-about">
+                        <h3 class="meal-title-about">About Meal</h3>
+                        <p class="meal-descript-about">Prepare the buns! For the ideal stuffing for juicy burgers, coat or marinate chicken thighs and breast. Dig it after adding toppings like slaw and sauce along with your selected side dishes.
+                        </p>
+                    </div>
+                    <div class = "meal-instruct">
+                        <h3>Ingredients:</h3>
+                        <p><br>3 boneless chicken breasts (around half a kg)
+                            <br>1 tspn of pepper
+                            <br>1 tspn of salt
+                            <br>2 tblspns of worcestershire sauce
+                            <br>1 tspn of Mustard powder or all spice powder
+                            <br>2 tblspns of Flour
+                            <br>1 Egg
+                            <br>1 1/2 cups of Breadcrumbs
+                            <br>Soft seeded burger buns
+                            <br>Mayonnaise or KFC Zinger Sauce
+                        </p>
+                        <h3>Instruction:</h3>
+                        <p><br>1. If your chicken breasts are too big, slice them before cooking. Then, marinade the chicken breasts in the Worcestershire sauce, pepper, salt, mustard, or all-spice powder. Leave the chicken for at least four hours or over night.
+                            <br>2. An egg and two tablespoons of water should be beaten together to make the batter, which should then be set aside.
+                            <br>3. Chicken breasts that have been marinated should be heavily dusted in flour. They should be well coated after being dipped in both the egg and the breadcrumbs.
+                            <br>4. The coated chicken breasts should be deep-fried in heated oil over a medium-high heat until they are crisp and golden brown.
+                            <br>5. The finished burger should be stacked with the lettuce on top, followed by the chicken, and then the mayonnaise or KFC zinger sauce. The buns should be cut in half and lightly toasted. If you'd like a cheesy kick, add some sliced American cheese.
+                        </p>
+                
+                    </div>
+                    <div class = "meal-img">
+                        <img src = "./img/Burger.webp" alt = "">
+                      </div>
+                      <div class = "meal-link">
+                        <a href="https://tinyurl.com/td757uct" class="meal-link-btn" >Watch Video</a>
+                    </div>
+                </div>
+            </div> 
+            <div class = "nine-meal-detail" id="nine-meal-detail">
+                <!-- recipe close btn -->
+                <button type = "button" class = "btn recipe-close-btn" id = "recipe-close-btn" onclick="closeBtn()">
+                    <i class ="fas fa-times"></i>
+                </button>
+
+                <!-- recipe details -->
+                <div class="meal-content">
+                    <h2 class="meal-name">Chatpate</h2>
+                    <div class="meal-about">
+                        <h3 class="meal-title-about">About Meal</h3>
+                        <p class="meal-descript-about">Chapate is one of the most famous street foods in Nepal, alongside momo. 
+
+                            It has a unique combination of flavors – crunchy, spicy, salty, and sour.
+                        </p>
+                    </div>
+                    <div class = "meal-instruct">
+                        <h3>Ingredients:</h3>
+                        <p><li>One bowl of muri or puffed rice</li>
+                            <li>One cup of green peas</li>
+                            <li>Finely chopped onion</li>   
+                            <li>One chopped tomato</li>
+                            <li>Two boiled  potatoes</li>
+                            <li>Four-Five green chillies</li>
+                            <li>A packet Wai-wai noodle</li>
+                            <li>One cup dalmot</li>
+                            <li>Finely chopped cucumber</li>
+                            <li>One lemon</li>
+                            <li>Salt or Black Salt</li>
+                            <li>a pinch Cumin powder</li>
+                            <li>Chili powder as per your preference</li>
+                            <li>Chopped coriander</li>
+                            <li>A teaspoon of mustard oil</li>
+                        </p>
+                        <h3>Instruction:</h3>
+                        <p>
+                            <li>First of all, take a big bowl and add peas, chopped onion, tomato, potatoes, chillies, and cucumber altogether</li>
+                            <li>Then add noodles, dalmot and puffed rice </li>
+                            <li>After that add cumin powder, chili powder, wai-wai noodle masala, a pinch of salt or black salt</li>
+                            <li>Add a tablespoon of mustard oil and then mix it properly</li>
+                            <li>Squeeze some lemon juice and then give it a stir</li>
+                            <li>Garnish with chopped coriander on top</li>
+                            <li>Its ready to serve</li>
+                            <li></li>
+                            <li></li>
+                        </p>
+                
+                    </div>
+                    <div class = "meal-img">
+                        <img src = "./img/chatpate.jpg" alt = "">
+                      </div>
+                      <div class = "meal-link">
+                        <a href="https://www.youtube.com/watch?v=3tw4jScl3jg" class="meal-link-btn" >Watch Video</a>
+                    </div>
+                </div>
+            </div> 
+            <div class = "ten-meal-detail" id="ten-meal-detail">
+                <!-- recipe close btn -->
+                <button type = "button" class = "btn recipe-close-btn" id = "recipe-close-btn" onclick="closeBtn()">
+                    <i class ="fas fa-times"></i>
+                </button>
+
+                <!-- recipe details -->
+                <div class="meal-content">
+                    <h2 class="meal-name">Radish Pickle</h2>
+                    <div class="meal-about">
+                        <h3 class="meal-title-about">About Meal</h3>
+                        <p class="meal-descript-about"> Mula ko Achar is a Nepali fermented pickle made with radish, mustard oil, and spices. It makes a great condiment with your meals.
+                        </p>
+                    </div>
+                    <div class = "meal-instruct">
+                        <h3>Ingredients:</h3>
+                        <p><li>2 lb. daikon radish, sliced 1/4-in thick into 2-in lengths</li>
+                            <li>1/2 cup ground mustard seeds</li>
+                            <li>1 teaspoon turmeric</li>
+                            <li>1 tablespoon paprika</li>
+                            <li>1 teaspoon timur (Szechwan pepper)</li>
+                            <li>2 tablespoons hot chili paste</li>
+                            <li>5 tablespoons mustard oil</li>
+                            <li>Pinch of asafetida</li>
+                            <li>Salt to taste</li>
+                            
+                        </p>
+                        <h3>Instruction:</h3>
+                        <p><li>In a large bowl, combine daikon with one tablespoon of salt and let rest for at least four hours.</li>
+                            <li>This process accomplishes the extraction of water from daikon.
+                                Press daikon pieces between palms to squeeze water as much as possible.</li>
+                            <li>Reserve in a bowl.</li>
+                            <li>To this, add ground musturd, paprika, timur, chili paste, mustard oil, asafetida and salt.</li>
+                            <li>Be careful in adding excessive amount of salt as daikon had already been blanched in salt.</li>
+                            <li>Mix all ingredients thoroughly.</li>
+                            <li>Put the daikon mixture in a sterilized jar; close lid and allow to rest in a warm place for at least three days for fermentation before serving.</li>
+                            <li>Refrigerate to store.</li>
+                            
+                        </p>
+                
+                    </div>
+                    <div class = "meal-img">
+                        <img src = "./img/mula.jpg" alt = "">
+                      </div>
+                      <div class = "meal-link">
+                        <a href="https://www.youtube.com/watch?v=p2Cn5MSbKh8" class="meal-link-btn" >Watch Video</a>
+                    </div>
+                </div>
+            </div> 
+            <div class = "eleven-meal-detail" id="four-meal-detail">
+                <!-- recipe close btn -->
+                <button type = "button" class = "btn recipe-close-btn" id = "recipe-close-btn" onclick="closeBtn()">
+                    <i class ="fas fa-times"></i>
+                </button>
+
+                <!-- recipe details -->
+                <div class="meal-content">
+                    <h2 class="meal-name">Dalle Khursani pickle</h2>
+                    <div class="meal-about">
+                        <h3 class="meal-title-about">About Meal</h3>
+                        <p class="meal-descript-about">Dalle Khursani (round chili) is one of the hottest chilies found in the world. It is also commonly called Akbare khursani. There is another variety super hot chili commonly found in Nepal called Jeere Khursani, a very tiny chili but has extreme heat, which name derives from its size similar to cumin (Jeera). 
+                        </p>
+                    </div>
+                    <div class = "meal-instruct"> 
+                        <h3>Ingredients:</h3>
+                        <p><li>10 Dalle Khursani (round red chillies)</li>
+                            <li>6 cloves of garlic</li>
+                            <li>1 medium-sized tomatoes</li>
+                            <li>1/2 teaspoon turmeric powder</li>
+                            <li>1 teaspoon cumin powder</li>
+                            <li>1 teaspoon salt (or to taste)</li>
+                            <li>1 tablespoon vegetable oil</li>
+                            
+                        </p>
+                        <h3>Instruction:</h3>
+                        <p><li>Wash the Dalle Khursani (chillies) thoroughly, remove the stems and keep them aside.</li>
+                            <li>Peel and finely chop the garlic cloves.</li>
+                            <li>Heat the vegetable oil in a pan over medium heat. Once the oil is hot, add the chopped garlic and sauté until it turns golden brown.</li>
+                            <li>Add the Dalle Khursani to the pan and sauté for about 5 minutes until they become soft.</li>
+                            <li>Chop the tomato and add it to the pan. Cook until the tomato becomes soft and mushy.</li>
+                            <li>Add the turmeric powder, cumin powder, and salt. Mix well and continue to cook for another 2-3 minutes.</li>
+                            <li>Remove the pan from the heat and allow the mixture to cool down.</li>
+                            <li>Once cooled, transfer the mixture into a blender or a mortar and pestle. Blend or crush until you get a coarse paste.</li>
+                            <li>Transfer the paste into a serving dish. Your Dalle Khursani is ready to be served. Enjoy it with rice, roti, or any other main course dishes.</li>
+                            
+                        </p>
+                
+                    </div>
+                    <div class = "meal-img">
+                        <img src = "./img/dalle.jpg " alt = "">
+                      </div>
+                      <div class = "meal-link">
+                        <a href="https://www.youtube.com/watch?v=qSsN6JtrDfI" class="meal-link-btn" >Watch Video</a>
+                    </div>
+                </div>
+            </div> 
+            
+            
+        </div>
+            <!--Ending of Recipe Details-->
+
+            <!--Footer-->
+    <div class="footer">
+        <div class="social-btn">
+            <a href="https://www.facebook.com/recifree" target="_blank" ><i class="	fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/recifree" target="_blank" ><i class="	fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/in/annayuna-rai-8b1a96308/" target="_blank"><i class="	fab fa-linkedin"></i></a>
+            <a href="https://github.com/09anna" target="_blank" "><i class="	fab fa-github"></i></a>
+        </div>
+            <div class="quick-bar">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        <p>Copyright &copy; 2024 ReciFree. All right reserved</p>  
+    </div>
+
+    <!--Ending of Footer-->
+
+<!--Script for Javascript-->
+<script src="./assets/index.js"></script>
+</body>
+</html>
