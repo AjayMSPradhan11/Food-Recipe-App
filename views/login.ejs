@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      background-color: rgb(193, 190, 255);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card {
+      width: 50%;
+      display: flex;
+      background-color: white;
+      border-radius: 10px;
+      min-height: 600px;
+      overflow: hidden;
+    }
+    .left {
+      flex: 1;
+      background: linear-gradient(rgba(39, 11, 96, 0.5), rgba(39, 11, 96, 0.5)),
+        url("https://images.pexels.com/photos/3228727/pexels-photo-3228727.jpeg?auto=compress&cs=tinysrgb&w=1600") center;
+      background-size: cover;
+      padding: 50px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      color: white;
+    }
+    .left h1 {
+      font-size: 100px;
+      line-height: 100px;
+    }
+    .left span {
+      font-size: 14px;
+    }
+    .left button {
+      width: 50%;
+      padding: 10px;
+      border: none;
+      background-color: white;
+      color: rebeccapurple;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .right {
+      flex: 1;
+      padding: 50px;
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+      justify-content: center;
+    }
+    .right h1 {
+      color: #555;
+    }
+    .right form {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+    .right form input {
+      border: none;
+      border-bottom: 1px solid lightgray;
+      padding: 20px 10px;
+    }
+    .right form button {
+      width: 50%;
+      padding: 10px;
+      border: none;
+      background-color: #938eef;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .error {
+      color: red;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="login">
+    <div class="card">
+      <div class="left">
+        <h1>Hello World.</h1>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero cum,
+          alias totam numquam ipsa exercitationem dignissimos, error nam,
+          consequatur.
+        </p>
+        <span>Don't have an account?</span>
+        <a href="/auth/register">
+          <button>Register</button>
+        </a>
+      </div>
+      <div class="right">
+        <h1>Login</h1>
+        <form action="/auth/login" method="POST">
+          <input
+            type="text"
+            placeholder="Username"
+            name="username"
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            name="password"
+            required
+          />
+          <% if (typeof error !== 'undefined' && error) { %>
+            <p class="error"><%= error %></p>
+          <% } %>
+          <button type="submit">Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

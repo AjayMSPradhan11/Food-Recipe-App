@@ -5,8 +5,8 @@ const util = require('util'); // To promisify methods
 const pool = mysql.createPool({
   host: 'localhost',
   user: 'root',
-  password: '', // Replace with your MySQL password
-  database: 'recifree',      // Replace with your database name
+  password: '', 
+  database: 'recifree',      
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,

@@ -1,6 +1,7 @@
 const express = require("express");
 const Category = require("../models/Category");
 const Recipe = require("../models/Recipe");
+const db = require("../models/database"); // Import the database pool
 
 const router = express.Router();
 
@@ -73,6 +74,76 @@ router.post("/search", async (req, res) => {
     res.render("search", { title: "Cooking Blog - Search", recipes });
   } catch (error) {
     res.status(500).send({ message: error.message || "Error Occurred" });
+  }
+});
+
+router.get("/submit-recipe", async (req, res) => {
+  try {
+    // console.log("");
+    // // return ({'json':'json'})
+    // const limitNumber = 5;
+    // const categories = await Category.findAll(); //SQL ko lai pachi comment hatauney.
+    // console.log("categories", categories);
+    // const latest = await Recipe.findAll(); // Fetch latest recipes
+    // console.log("latest", latest);
+    // const food = { latest };
+    // console.log("food", food);
+
+    res.render("submit-recipe", { title: "Cooking Blog - Submit Recipe" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: error.message || "Error Occurred" });
+  }
+});
+
+router.post("/submit-recipe", async (req, res) => {
+  console.log("chalyo post",req.body);
+  try {
+    let imageUploadFile;
+    let uploadPath;
+    let newImageName;
+
+    if (!req.files || Object.keys(req.files).length === 0) {
+      console.log("No Files were uploaded.");
+    } else {
+      imageUploadFile = req.files.image;
+      newImageName = Date.now() + imageUploadFile.name;
+
+      uploadPath =
+        require("path").resolve("./") + "/public/uploads/" + newImageName;
+
+      imageUploadFile.mv(uploadPath, function (err) {
+        if (err) return res.status(500).send(err);
+      });
+    }
+    await db.query(
+      "INSERT INTO recipes (name, description, email, ingredients,category,image) VALUES (?, ?, ?, ?,?,?)",
+      [
+        req.body.name,
+        req.body.description,
+        req.body.email,
+       JSON.stringify( req.body.ingredients),
+        req.body.category,
+        newImageName ?? "",
+      ]
+    );
+    // const newRecipe = await Recipe.create({
+    //   name: req.body.name,
+    //   description: req.body.description,
+    //   email: req.body.email,
+    //   ingredients: req.body.ingredients,
+    //   category: req.body.category,
+    //   image: '',
+    // });
+    // console.log(newRecipe,'added')
+
+    req.flash("infoSubmit", "Recipe has been added.");
+    res.redirect("/submit-recipe");
+  } catch (error) {
+    console.log(error, "error aako");
+
+    req.flash("infoErrors", error.message || "Error Occurred");
+    res.redirect("/submit-recipe");
   }
 });
 
