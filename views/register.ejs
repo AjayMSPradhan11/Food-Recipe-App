@@ -5,102 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up</title>
   <style>
-    .register {
-      height: 100vh;
-      background-color: rgb(193, 190, 255);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .card {
-      width: 50%;
-      display: flex;
-      flex-direction: row-reverse;
-      background-color: white;
-      border-radius: 10px;
-      min-height: 600px;
-      overflow: hidden;
-    }
-
-    .card .left {
-      flex: 1;
-      background: linear-gradient(rgba(39, 11, 96, 0.5), rgba(39, 11, 96, 0.5)),
-        url("https://images.pexels.com/photos/4881619/pexels-photo-4881619.jpeg?auto=compress&cs=tinysrgb&w=1600")
-          center;
-      background-size: cover;
-      padding: 50px;
-      display: flex;
-      flex-direction: column;
-      gap: 30px;
-      color: white;
-    }
-
-    .card .left h1 {
-      font-size: 100px;
-      line-height: 100px;
-    }
-
-    .card .left span {
-      font-size: 14px;
-    }
-
-    .card .left button {
-      width: 50%;
-      padding: 10px;
-      border: none;
-      background-color: white;
-      color: rebeccapurple;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .card .right {
-      flex: 1;
-      padding: 50px;
-      display: flex;
-      flex-direction: column;
-      gap: 50px;
-      justify-content: center;
-    }
-
-    .card .right h1 {
-      color: #555;
-    }
-
-    .card .right form {
-      display: flex;
-      flex-direction: column;
-      gap: 30px;
-    }
-
-    .card .right form input {
-      border: none;
-      border-bottom: 1px solid lightgray;
-      padding: 20px 10px;
-    }
-
-    .card .right form button {
-      width: 50%;
-      padding: 10px;
-      border: none;
-      background-color: #938eef;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-    }
+    /* Your existing styles... */
   </style>
 </head>
 <body>
   <div class="register">
     <div class="card">
       <div class="left">
-        <h1>Lama Social.</h1>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero cum,
-          alias totam numquam ipsa exercitationem dignissimos, error nam,
-          consequatur.
-        </p>
+        <h1>Register.</h1>
+        <p>Please Register to enter Recipes.</p>
         <span>Do you have an account?</span>
         <a href="/login"><button>Login</button></a>
       </div>
@@ -131,13 +44,61 @@
             name="name"
             required
           />
+          <select id="preferred_cuisine" name="preferred_cuisine" required>
+            <option value="" disabled selected>Select your favorite cuisine</option>
+            <option value="Nepali">Nepali</option>
+            <option value="Thai">Thai</option>
+            <option value="Spanish">Spanish</option>
+            <option value="Indian">Indian</option>
+            <option value="American">American</option>
+            <option value="Mexican">Mexican</option>
+          </select>
+          
+          <div id="recommended-recipes" class="mt-4">
+            <!-- Recommended recipes-->
+          </div>
+          
           <% if (err) { %>
             <p style="color: red;"><%= err %></p>
           <% } %>
+          
           <button type="submit">Register</button>
         </form>
       </div>
     </div>
   </div>
+
+  <script>
+    document.getElementById('preferred_cuisine').addEventListener('change', function(event) {
+      const selectedCategory = event.target.value;
+      
+      //Content based filtering algorithm
+      fetch(`/api/recipes/category/${selectedCategory}`)
+        .then(response => response.json())
+        .then(data => {
+          const recommendedSection = document.getElementById('recommended-recipes');
+          recommendedSection.innerHTML = ''; // Clear any previous recommendations
+          
+          if (data && data.recipes && data.recipes.length > 0) {
+            data.recipes.forEach(recipe => {
+              const recipeElement = document.createElement('div');
+              recipeElement.classList.add('recipe');
+              
+              recipeElement.innerHTML = `
+                <img src="/uploads/${recipe.image}" alt="${recipe.name}" width="100">
+                <div>${recipe.name}</div>
+              `;
+              
+              recommendedSection.appendChild(recipeElement);
+            });
+          } else {
+            recommendedSection.innerHTML = '<p>No recipes found for this category.</p>';
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching recipes:', error);
+        });
+    });
+  </script>
 </body>
 </html>

@@ -4,8 +4,8 @@ const fileUpload = require('express-fileupload');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
-const recipeRoutes = require('./server/routes/recipeRoutes'); // Import recipe routes
-const authRoutes = require('./server/routes/authRoutes'); // Import auth routes
+const recipeRoutes = require('./server/routes/recipeRoutes');
+const authRoutes = require('./server/routes/authRoutes');
 require('dotenv').config();
 
 const app = express();
@@ -36,8 +36,8 @@ app.set('layout', './layouts/main');
 app.set('view engine', 'ejs');
 
 // Routes
-app.use('/', recipeRoutes);
-app.use('/auth', authRoutes); // Add auth-related routes
+app.use('/', recipeRoutes); // Recipe routes
+app.use('/auth', authRoutes); // Auth routes
 
 // Handle 404 errors
 app.use((req, res) => {

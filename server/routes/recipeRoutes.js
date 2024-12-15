@@ -1,31 +1,36 @@
 const express = require("express");
 const Category = require("../models/Category");
 const Recipe = require("../models/Recipe");
-const db = require("../models/database"); // Import the database pool
+const db = require("../models/database");
 
 const router = express.Router();
 
-// Homepage
+// Homepage with personalized recommendations
 router.get("/", async (req, res) => {
   try {
-    console.log("");
-    // return ({'json':'json'})
     const limitNumber = 5;
-    const categories = await Category.findAll(); //SQL ko lai pachi comment hatauney.
-    console.log("categories", categories);
+    const categories = await Category.findAll(); // Fetch all categories
     const latest = await Recipe.findAll(); // Fetch latest recipes
-    console.log("latest", latest);
-    const food = { latest };
-    console.log("food", food);
 
+    let recommended = [];
+    if (req.session.user) {
+      // Use the user's preferred cuisine to filter recipes
+      const preferredCuisine = req.session.user.preferred_cuisine;
+      recommended = await db.query(
+        "SELECT * FROM recipes WHERE category = ? ORDER BY created_at DESC LIMIT ?",
+        [preferredCuisine, limitNumber]
+      );
+    }
+
+    const food = { latest, recommended };
     res.render("index", { title: "Cooking Blog - Home", categories, food });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).send({ message: error.message || "Error Occurred" });
   }
 });
 
-// Categories
+// Categories route
 router.get("/categories", async (req, res) => {
   try {
     const categories = await Category.findAll();
@@ -38,14 +43,14 @@ router.get("/categories", async (req, res) => {
   }
 });
 
-// Explore Recipes by Category
-router.get("/categories/:id", async (req, res) => {
+// Fetch recipes by category
+router.get("/categories/:category", async (req, res) => {
   try {
-    const categoryId = req.params.id;
-    const categoryById = await Recipe.findAll(); // You can filter by category if needed
+    const category = req.params.category;
+    const recipes = await db.query("SELECT * FROM recipes WHERE category = ?", [category]);
     res.render("categories", {
-      title: "Cooking Blog - Categories",
-      categoryById,
+      title: `Cooking Blog - ${category} Recipes`,
+      categoryById: recipes,
     });
   } catch (error) {
     res.status(500).send({ message: error.message || "Error Occurred" });
@@ -66,7 +71,7 @@ router.get("/recipe/:id", async (req, res) => {
   }
 });
 
-// Search Recipes
+// Recipe search
 router.post("/search", async (req, res) => {
   try {
     const searchTerm = req.body.searchTerm;
@@ -77,27 +82,18 @@ router.post("/search", async (req, res) => {
   }
 });
 
+// Submit Recipe Form
 router.get("/submit-recipe", async (req, res) => {
   try {
-    // console.log("");
-    // // return ({'json':'json'})
-    // const limitNumber = 5;
-    // const categories = await Category.findAll(); //SQL ko lai pachi comment hatauney.
-    // console.log("categories", categories);
-    // const latest = await Recipe.findAll(); // Fetch latest recipes
-    // console.log("latest", latest);
-    // const food = { latest };
-    // console.log("food", food);
-
     res.render("submit-recipe", { title: "Cooking Blog - Submit Recipe" });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).send({ message: error.message || "Error Occurred" });
   }
 });
 
+// Handle Recipe Submission
 router.post("/submit-recipe", async (req, res) => {
-  console.log("chalyo post",req.body);
   try {
     let imageUploadFile;
     let uploadPath;
@@ -109,39 +105,29 @@ router.post("/submit-recipe", async (req, res) => {
       imageUploadFile = req.files.image;
       newImageName = Date.now() + imageUploadFile.name;
 
-      uploadPath =
-        require("path").resolve("./") + "/public/uploads/" + newImageName;
+      uploadPath = require("path").resolve("./") + "/public/uploads/" + newImageName;
 
       imageUploadFile.mv(uploadPath, function (err) {
         if (err) return res.status(500).send(err);
       });
     }
+
     await db.query(
-      "INSERT INTO recipes (name, description, email, ingredients,category,image) VALUES (?, ?, ?, ?,?,?)",
+      "INSERT INTO recipes (name, description, email, ingredients, category, image) VALUES (?, ?, ?, ?, ?, ?)",
       [
         req.body.name,
         req.body.description,
         req.body.email,
-       JSON.stringify( req.body.ingredients),
+        JSON.stringify(req.body.ingredients),
         req.body.category,
         newImageName ?? "",
       ]
     );
-    // const newRecipe = await Recipe.create({
-    //   name: req.body.name,
-    //   description: req.body.description,
-    //   email: req.body.email,
-    //   ingredients: req.body.ingredients,
-    //   category: req.body.category,
-    //   image: '',
-    // });
-    // console.log(newRecipe,'added')
 
     req.flash("infoSubmit", "Recipe has been added.");
     res.redirect("/submit-recipe");
   } catch (error) {
-    console.log(error, "error aako");
-
+    console.error("Error during recipe submission:", error);
     req.flash("infoErrors", error.message || "Error Occurred");
     res.redirect("/submit-recipe");
   }
