@@ -37,6 +37,33 @@ router.post("/register", async (req, res) => {
     console.error("Error during registration:", error);
     res.render("register", { err: "Registration failed. Please try again." });
   }
+
+  function getRecommendations(userPreferences, allUsers) {
+    const similarityScores = allUsers.map(user => {
+        return {
+            userId: user.id,
+            similarity: computePearsonCorrelation(userPreferences, user.preferences),
+        };
+    });
+  
+    // Sort users by similarity in descending order
+    similarityScores.sort((a, b) => b.similarity - a.similarity);
+  
+    // Get the preferences of the most similar user(s)
+    const topUser = allUsers.find(u => u.id === similarityScores[0].userId);
+  
+    // Recommend recipes that the top user likes, but the current user has not rated
+    const recommendations = Object.keys(topUser.preferences)
+        .filter(recipe => !userPreferences[recipe] && topUser.preferences[recipe] > 0)
+        .map(recipeId => ({
+            id: recipeId,
+            name: getRecipeNameById(recipeId), // Fetch recipe details
+            image: getRecipeImageById(recipeId),
+        }));
+  
+    return recommendations;
+  }
+
 });
 
 // Display login page
@@ -71,7 +98,7 @@ router.post("/login", async (req, res) => {
     console.log(`User logged in: ${username}`);
 
     // Redirect to the homepage or another page after login
-    res.redirect("/"); // This will render index.ejs (or the homepage route)
+    res.redirect("/"); 
   } catch (error) {
     console.error("Error during login:", error);
     res.render("login", { error: "Login failed. Please try again." });
