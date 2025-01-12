@@ -10,14 +10,15 @@
       padding: 0;
       font-family: Arial, sans-serif;
       height: 100vh;
-      background-color: rgb(193, 190, 255);
+      background-color: rgb(176, 224, 230); /* Powder blue background */
       display: flex;
       align-items: center;
       justify-content: center;
     }
     .card {
-      /* width: 50%; */
       display: flex;
+      width: 80%;
+      max-width: 1200px;
       background-color: white;
       border-radius: 10px;
       min-height: 600px;
@@ -37,6 +38,10 @@
     .left h1 {
       font-size: 100px;
       line-height: 100px;
+    }
+    .left p {
+      font-size: 16px;
+      max-width: 300px;
     }
     .left span {
       font-size: 14px;
@@ -75,7 +80,7 @@
       width: 50%;
       padding: 10px;
       border: none;
-      background-color: #938eef;
+      background-color: #4493c0;
       color: white;
       font-weight: bold;
       cursor: pointer;
@@ -90,9 +95,9 @@
   <div class="login">
     <div class="card">
       <div class="left">
-        <h1> Login</h1>
+        <h1>Hello World.</h1>
         <p>
-          Please login to use the Web Application.
+          Please Login to upload your Recipe.
         </p>
         <span>Don't have an account?</span>
         <a href="/auth/register">

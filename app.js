@@ -55,3 +55,7 @@ app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
 
+app.get('/', (req, res) => {
+  const userLoggedIn = req.session.user ? true : false;
+  res.render('home', { userLoggedIn });
+});

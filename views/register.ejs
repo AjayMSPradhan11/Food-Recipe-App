@@ -5,7 +5,74 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up</title>
   <style>
-    /* Your existing styles... */
+    /* Apply powder blue background to the whole page and register class */
+    body, .register {
+      background: rgb(176, 224, 230); /* Powder blue background */
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    
+    .register {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      display: flex;
+      width: 80%;
+      max-width: 1000px;
+      background: white;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .left {
+      flex: 1;
+      padding: 20px;
+      background: url('/img/hero-image.png') no-repeat center center;
+      background-size: cover;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .right {
+      flex: 1;
+      padding: 30px;
+    }
+
+    .right h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .right input, .right select {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    .right button {
+      width: 100%;
+      padding: 12px;
+      background-color: #007BFF;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .right button:hover {
+      background-color: #0056b3;
+    }
   </style>
 </head>
 <body>
@@ -47,7 +114,7 @@
           <select id="preferred_cuisine" name="preferred_cuisine" required>
             <option value="" disabled selected>Select your favorite cuisine</option>
             <option value="Nepali">Nepali</option>
-            <option value="Thai">Thai</option>
+            <option value="Chinese">Chinese</option>
             <option value="Spanish">Spanish</option>
             <option value="Indian">Indian</option>
             <option value="American">American</option>
@@ -72,7 +139,7 @@
     document.getElementById('preferred_cuisine').addEventListener('change', function(event) {
       const selectedCategory = event.target.value;
       
-      //Content based filtering algorithm
+      // Content-based filtering algorithm
       fetch(`/api/recipes/category/${selectedCategory}`)
         .then(response => response.json())
         .then(data => {

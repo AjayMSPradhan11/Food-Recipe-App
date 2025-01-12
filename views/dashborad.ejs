@@ -5,22 +5,111 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Users</title>
   <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h1, h2 {
+      color: #333;
+    }
     table {
       width: 100%;
       border-collapse: collapse;
-    }
-    table, th, td {
-      border: 1px solid black;
+      margin-top: 20px;
     }
     th, td {
+      border: 1px solid #ddd;
       padding: 10px;
       text-align: left;
     }
+    th {
+      background-color: #f4f4f4;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+    button {
+      padding: 8px 12px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    a button {
+      text-decoration: none;
+    }
+    form {
+      display: inline;
+    }
+    .actions {
+      display: flex;
+      gap: 10px;
+    }
+    .recommendations {
+      margin-top: 20px;
+    }
+    .recommendation-list {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .recommendation-item {
+      width: 150px;
+      text-align: center;
+    }
+    .recommendation-item img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    @media (max-width: 600px) {
+      table {
+        font-size: 14px;
+      }
+      th, td {
+        padding: 8px;
+      }
+      .recommendation-item {
+        width: 100px;
+      }
+    }
   </style>
+  <script>
+    function confirmDelete(event) {
+      if (!confirm('Are you sure you want to delete this user?')) {
+        event.preventDefault();
+      }
+    }
+  </script>
 </head>
 
 <body>
   <h1>Users</h1>
+
+  <!-- Recommendations Section -->
+  <div class="recommendations">
+    <h2>Recommended for You</h2>
+    <% if (recommendations && recommendations.length > 0) { %>
+      <div class="recommendation-list">
+        <% recommendations.forEach(rec => { %>
+          <div class="recommendation-item">
+            <img src="<%= rec.image %>" alt="<%= rec.name %>">
+            <p><%= rec.name %></p>
+          </div>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <p>No recommendations available at the moment. Explore more recipes!</p>
+    <% } %>
+  </div>
+
+  <!-- Users Table -->
   <a href="/auth/register"><button>Add New User</button></a>
   <table>
     <thead>
@@ -39,8 +128,12 @@
           <td><%= user.username %></td>
           <td><%= user.email %></td>
           <td><%= user.name %></td>
-          <td>
-            <form action="/users/delete/<%= user.id %>" method="POST" style="display: inline;">
+          <td class="actions">
+            <form 
+              action="/users/delete/<%= user.id %>" 
+              method="POST" 
+              onsubmit="confirmDelete(event)"
+            >
               <button type="submit">Delete</button>
             </form>
             <a href="/users/edit/<%= user.id %>"><button>Edit</button></a>
