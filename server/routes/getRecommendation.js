@@ -1,7 +1,6 @@
-// getrecommendation.js
-
 const db = require("../models/database"); // Import the database pool
-const { computePearsonCorrelation } = require('../routes/authRoutes');
+const { computePearsonCorrelation, getRecommendations } = require('../routes/authRoutes');
+
 
 // Get recommendations based on user preferences and categories
 async function getRecommendations(userPreferences) {

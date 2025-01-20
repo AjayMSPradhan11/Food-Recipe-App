@@ -129,4 +129,6 @@ async function getRecommendations(userPreferences) {
   return recommendations;
 }
 
-module.exports = router;
+module.exports = router; 
+
+module.exports.getRecommendations = getRecommendations; 
