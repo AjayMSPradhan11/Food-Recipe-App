@@ -8,7 +8,6 @@
     <p class="lead">
       Explore our huge selection of delicious recipe ideas including; easy desserts, delicious vegan and vegetarian dinner ideas, gorgeous pasta recipes, quick bakes, family-friendly meals, and gluten-free recipes.
     </p>
-
   </div>
 </div>
 
@@ -31,7 +30,9 @@
 
   .category__img img {
     max-width: 100%;
+    height: 200px; /* Set a desired height for uniform image size */
     border-radius: 6px;
+    object-fit: cover; /* Maintain aspect ratio and fill the container */
   }
 
   .category__button {
@@ -86,7 +87,7 @@
     </div>
 
     <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-      <% food.recommended.forEach(function(recipe) { %>
+      <% food.recommended.slice().reverse().forEach(function(recipe) { %>
         <div class="col text-center category__block">
           <a href="/recipe/<%= recipe.id %>" class="category__link">
             <div class="category__img category__img--large shadow">
@@ -100,29 +101,41 @@
   <% } %>
 </section>
 
+
 <section class="pb-4 pt-4">
   <div class="d-flex mb-2 align-items-center">
     <h2>Latest Recipes</h2>
-    <a href="/explore-latest" class="ms-auto">View More</a>
   </div>
 
   <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-    <% if(food != '') { %>
-      <% food.latest.forEach(function(recipe) { %>
-        <div class="col text-center category__block">
-          <a href="/recipe/<%= recipe.id %>" class="category__link">
-            <div class="category__img category__img--large shadow">
-              <img src="/uploads/<%= recipe.image %>" alt="<%= recipe.name %>" loading="lazy">
-            </div>
-            <button class="category__button"><%= recipe.name %></button>
-          </a>
-        </div>
-      <% }) %>
+    <% if (food.latest && food.latest.length > 0) { %>
+      <% for (let i = food.latest.length - 1; i >= 0; i--) { 
+          const recipe = food.latest[i]; 
+      %>
+        <% if (i < 10) { %>
+          <div class="col text-center category__block">
+            <a href="/recipe/<%= recipe.id %>" class="category__link">
+              <div class="category__img category__img--large shadow">
+                <img src="/uploads/<%= recipe.image %>" alt="<%= recipe.name %>" loading="lazy">
+              </div>
+              <button class="category__button"><%= recipe.name %></button>
+            </a>
+          </div>
+        <% } %>
+      <% } %>
     <% } else { %>
       <p>No items found.</p>
     <% } %>
   </div>
+
+  <% if (food.latest && food.latest.length > 10) { %>
+    <div class="text-center mt-3">
+      <a href="/categories" class="btn btn-primary">See More</a>
+    </div>
+  <% } %>
 </section>
+
+
 
 <section class="px-4 py-5 my-5 text-center">
   <img src="/img/publish-recipe.png" class="d-block mx-auto mb-4 img-fluid" alt="Publish your recipe for FREE today" width="566" height="208" loading="lazy">

@@ -5,16 +5,14 @@ const db = require("../models/database");
 
 const router = express.Router();
 
-// Homepage with personalized recommendations
 router.get("/", async (req, res) => {
   try {
     const limitNumber = 5;
-    const categories = await Category.findAll(); // Fetch all categories
-    const latest = await Recipe.findAll(); // Fetch latest recipes
+    const categories = await Category.findAll(); 
+    const latest = await Recipe.findAll(); 
 
     let recommended = [];
     if (req.session.user) {
-      // Use the user's preferred cuisine to filter recipes
       const preferredCuisine = req.session.user.preferred_cuisine;
       recommended = await db.query(
         "SELECT * FROM recipes WHERE category = ? ORDER BY created_at DESC LIMIT ?",
@@ -30,7 +28,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Categories route
 router.get("/categories", async (req, res) => {
   try {
     const categories = await Category.findAll();
@@ -43,7 +40,6 @@ router.get("/categories", async (req, res) => {
   }
 });
 
-// Fetch recipes by category
 router.get("/categories/:category", async (req, res) => {
   try {
     const category = req.params.category;
@@ -57,7 +53,6 @@ router.get("/categories/:category", async (req, res) => {
   }
 });
 
-// Recipe Detail
 router.get("/recipe/:id", async (req, res) => {
   try {
     const recipeId = req.params.id;
@@ -71,7 +66,6 @@ router.get("/recipe/:id", async (req, res) => {
   }
 });
 
-// Recipe search
 router.post("/search", async (req, res) => {
   try {
     const searchTerm = req.body.searchTerm;
@@ -82,7 +76,6 @@ router.post("/search", async (req, res) => {
   }
 });
 
-// Submit Recipe Form
 router.get("/submit-recipe", async (req, res) => {
   try {
     res.render("submit-recipe", { title: "Cooking Blog - Submit Recipe" });
@@ -92,7 +85,6 @@ router.get("/submit-recipe", async (req, res) => {
   }
 });
 
-// Handle Recipe Submission
 router.post("/submit-recipe", async (req, res) => {
   try {
     let imageUploadFile;

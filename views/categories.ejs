@@ -10,29 +10,90 @@
 
 <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 mb-4">
   <% if(typeof categories !== 'undefined' && categories.length > 0) { %>
-    <% categories.forEach(function(category, index) { %>
-      <a href="/categories/<%- category.name %>" class="col text-center category__link">
-        <div class="category__img shadow">
-          <img src="/img/<%- category.image %>" alt="<%- category.name %>" loading="lazy">
-        </div>
-        <div class="pt-1"><%- category.name %></div>
-      </a>
+    <% categories.forEach(function(category) { %>
+      <div class="col text-center category__block">
+        <a href="/categories/<%- category.name %>" class="category__link">
+          <div class="category__img shadow">
+            <img src="/img/<%- category.image %>" alt="<%- category.name %>" loading="lazy">
+          </div>
+          <button class="category__button"><%- category.name %></button>
+        </a>
+      </div>
     <% }) %>
   <% } %>
 </div>
 
-
 <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
   <% if(typeof categoryById !== 'undefined' && categoryById.length > 0) { %>
-    <% categoryById.forEach(function(recipe, index){ %>
-    <a href="/recipe/<%= recipe.id %>" class="col text-center category__link">
-      <div class="category__img category__img--large shadow">
-        <img src="/uploads/<%= recipe.image %>" alt="<%= recipe.name %>" loading="lazy">
+    <% categoryById.forEach(function(recipe){ %>
+      <div class="col text-center category__block">
+        <a href="/recipe/<%= recipe.id %>" class="category__link">
+          <div class="category__img category__img--large shadow">
+            <img src="/uploads/<%= recipe.image %>" alt="<%= recipe.name %>" loading="lazy">
+          </div>
+          <button class="category__button"><%= recipe.name %></button>
+        </a>
       </div>
-      <div class="pt-1"><%= recipe.name %></div>
-    </a>
     <% }) %>
   <% } else { %>
     <p>No items found.</p>
   <% } %>
 </div>
+
+<style>
+  .category__img {
+    width: 100%;
+    max-height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .category__img img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+
+  .category__img--large img {
+    max-height: 200px;
+  }
+
+  .category__block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #f8f9fa;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .category__block:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .category__button {
+    width: 100%;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.2s ease;
+  }
+
+  .category__button:hover {
+    background-color: #0056b3;
+  }
+</style>

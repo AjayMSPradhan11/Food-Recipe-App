@@ -1,29 +1,24 @@
 const express = require("express");
 const router = express.Router();
-const db = require("../models/database"); // Import the database pool
+const db = require("../models/database"); 
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
-// Display register page
 router.get("/register", (req, res) => {
   res.render("register", { err: null });
 });
 
-// Handle registration form submission
 router.post("/register", async (req, res) => {
   try {
     const { username, email, password, name, preferred_cuisine } = req.body;
 
-    // Check if user already exists
     const existingUser = await db.query("SELECT * FROM users WHERE email = ?", [email]);
     if (existingUser.length > 0) {
       return res.render("register", { err: "Email already in use." });
     }
 
-    // Hash the password
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    // Insert new user into the database
     await db.query(
       "INSERT INTO users (username, email, password, name, preferred_cuisine) VALUES (?, ?, ?, ?, ?)",
       [username, email, hashedPassword, name, preferred_cuisine]
@@ -31,7 +26,6 @@ router.post("/register", async (req, res) => {
 
     console.log(`Registered user: ${username}, ${email}`);
 
-    // Redirect to the login page
     res.redirect("/auth/login");
   } catch (error) {
     console.error("Error during registration:", error);
@@ -59,38 +53,30 @@ function computePearsonCorrelation(category1, category2) {
   return den === 0 ? 0 : num / den;
 }
 
-// Display login page
 router.get("/login", (req, res) => {
   res.render("login", { error: null });
 });
 
-// Handle login form submission
 router.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    // Check if the user exists in the database
     const user = await db.query("SELECT * FROM users WHERE username = ?", [username]);
 
     if (user.length === 0) {
-      // If the user doesn't exist, render the login page with an error
       return res.render("login", { error: "Invalid username or password." });
     }
 
-    // Compare the password with the stored hash
     const match = await bcrypt.compare(password, user[0].password);
 
     if (!match) {
-      // If the password doesn't match, render the login page with an error
       return res.render("login", { error: "Invalid username or password." });
     }
 
-    // If login is successful, store user session data
-    req.session.user = user[0]; // Store user information in session
+    req.session.user = user[0]; 
 
     console.log(`User logged in: ${username}`);
 
-    // Redirect to the homepage or another page after login
     res.redirect("/");
   } catch (error) {
     console.error("Error during login:", error);
@@ -99,30 +85,26 @@ router.post("/login", async (req, res) => {
 });
 
 async function getRecommendations(userPreferences) {
-  // Fetch all users' preferences from the database
   const allUsers = await db.query("SELECT id, preferred_cuisines FROM users");
 
   const similarityScores = allUsers.map(user => {
-    const userPrefs = JSON.parse(user.preferences); // Assume preferences are stored as JSON
+    const userPrefs = JSON.parse(user.preferences); 
     return {
       userId: user.id,
       similarity: computePearsonCorrelation(userPreferences, userPrefs),
     };
   });
 
-  // Sort users by similarity in descending order
   similarityScores.sort((a, b) => b.similarity - a.similarity);
 
-  // Get the preferences of the most similar user
   const topUser = allUsers.find(u => u.id === similarityScores[0].userId);
   const topUserPreferences = JSON.parse(topUser.preferences);
 
-  // Recommend recipes that the top user likes but the current user has not rated
   const recommendations = Object.keys(topUserPreferences)
     .filter(recipe => !userPreferences[recipe] && topUserPreferences[recipe] > 0)
     .map(recipeId => ({
       id: recipeId,
-      name: getRecipeNameById(recipeId), // Fetch recipe details
+      name: getRecipeNameById(recipeId), 
       image: getRecipeImageById(recipeId),
     }));
 
