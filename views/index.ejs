@@ -30,9 +30,9 @@
 
   .category__img img {
     max-width: 100%;
-    height: 200px; /* Set a desired height for uniform image size */
+    height: 200px;
     border-radius: 6px;
-    object-fit: cover; /* Maintain aspect ratio and fill the container */
+    object-fit: cover;
   }
 
   .category__button {
@@ -56,63 +56,40 @@
   }
 </style>
 
-<div class="row row-cols-2 row-cols-lg-6 g-2 g-lg-3 py-4">
-  <% if(categories != '') { %>
-    <% categories.forEach(function(category, index) { %>
-      <div class="col text-center category__block">
-        <a href="/categories/<%- category.name %>" class="category__link">
-          <div class="category__img shadow">
-            <img src="img/<%- category.image %>" alt="<%- category.name %>" loading="lazy">
-          </div>
-          <button class="category__button"><%- category.name %></button>
-        </a>
-      </div>
-    <% }) %>
-  <% } %>
-
-  <div class="col text-center category__block">
-    <a href="/categories" class="category__link">
-      <div class="category__img shadow">
-        <img src="img/view-all.jpg" alt="View All Categories" loading="lazy">
-      </div>
-      <button class="category__button">View All</button>
-    </a>
-  </div>
-</div>
-
-<section class="pb-4 pt-4">
-  <% if (food.recommended && food.recommended.length > 0) { %>
-    <div class="d-flex mb-2 align-items-center">
-      <h2>Recommended for You</h2>
-    </div>
-
-    <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-      <% food.recommended.slice().reverse().forEach(function(recipe) { %>
+<% if (user) { %>
+  <!-- Categories Section -->
+  <div class="row row-cols-2 row-cols-lg-6 g-2 g-lg-3 py-4">
+    <% if(categories && categories.length > 0) { %>
+      <% categories.forEach(function(category) { %>
         <div class="col text-center category__block">
-          <a href="/recipe/<%= recipe.id %>" class="category__link">
-            <div class="category__img category__img--large shadow">
-              <img src="/uploads/<%= recipe.image %>" alt="<%= recipe.name %>" loading="lazy">
+          <a href="/categories/<%- category.name %>" class="category__link">
+            <div class="category__img shadow">
+              <img src="img/<%- category.image %>" alt="<%- category.name %>" loading="lazy">
             </div>
-            <button class="category__button"><%= recipe.name %></button>
+            <button class="category__button"><%- category.name %></button>
           </a>
         </div>
       <% }) %>
+    <% } %>
+
+    <div class="col text-center category__block">
+      <a href="/categories" class="category__link">
+        <div class="category__img shadow">
+          <img src="img/view-all.jpg" alt="View All Categories" loading="lazy">
+        </div>
+        <button class="category__button">View All</button>
+      </a>
     </div>
-  <% } %>
-</section>
-
-
-<section class="pb-4 pt-4">
-  <div class="d-flex mb-2 align-items-center">
-    <h2>Latest Recipes</h2>
   </div>
 
-  <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-    <% if (food.latest && food.latest.length > 0) { %>
-      <% for (let i = food.latest.length - 1; i >= 0; i--) { 
-          const recipe = food.latest[i]; 
-      %>
-        <% if (i < 10) { %>
+  <section class="pb-4 pt-4">
+    <% if (food.recommended && food.recommended.length > 0) { %>
+      <div class="d-flex mb-2 align-items-center">
+        <h2>Recommended for You</h2>
+      </div>
+  
+      <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+        <% food.recommended.slice().reverse().forEach(function(recipe) { %>
           <div class="col text-center category__block">
             <a href="/recipe/<%= recipe.id %>" class="category__link">
               <div class="category__img category__img--large shadow">
@@ -121,29 +98,54 @@
               <button class="category__button"><%= recipe.name %></button>
             </a>
           </div>
-        <% } %>
-      <% } %>
-    <% } else { %>
-      <p>No items found.</p>
+        <% }) %>
+      </div>
     <% } %>
-  </div>
+  </section>
 
-  <% if (food.latest && food.latest.length > 10) { %>
-    <div class="text-center mt-3">
-      <a href="/categories" class="btn btn-primary">See More</a>
+  <!-- Latest Recipes Section -->
+  <section class="pb-4 pt-4">
+    <div class="d-flex mb-2 align-items-center">
+      <h2>Latest Recipes</h2>
     </div>
-  <% } %>
-</section>
 
-
-
-<section class="px-4 py-5 my-5 text-center">
-  <img src="/img/publish-recipe.png" class="d-block mx-auto mb-4 img-fluid" alt="Publish your recipe for FREE today" width="566" height="208" loading="lazy">
-  <h1 class="display-5 fw-bold">Publish your recipe for FREE today</h1>
-  <div class="col-lg-6 mx-auto">
-    <p class="lead mb-4">Publish your Recipe in front of thousands of people for free.</p>
-    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-      <a href="/submit-recipe" class="btn btn-primary btn-dark btn-lg">Submit Recipe</a>
+    <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+      <% if (food.latest && food.latest.length > 0) { %>
+        <% for (let i = food.latest.length - 1; i >= 0; i--) { 
+            const recipe = food.latest[i]; 
+        %>
+          <% if (i < 10) { %>
+            <div class="col text-center category__block">
+              <a href="/recipe/<%= recipe.id %>" class="category__link">
+                <div class="category__img category__img--large shadow">
+                  <img src="/uploads/<%= recipe.image %>" alt="<%= recipe.name %>" loading="lazy">
+                </div>
+                <button class="category__button"><%= recipe.name %></button>
+              </a>
+            </div>
+          <% } %>
+        <% } %>
+      <% } else { %>
+        <p>No items found.</p>
+      <% } %>
     </div>
-  </div>
-</section>
+
+    <% if (food.latest && food.latest.length > 10) { %>
+      <div class="text-center mt-3">
+        <a href="/categories" class="btn btn-primary">See More</a>
+      </div>
+    <% } %>
+  </section>
+
+  <!-- Publish Section -->
+  <section class="px-4 py-5 my-5 text-center">
+    <img src="/img/publish-recipe.png" class="d-block mx-auto mb-4 img-fluid" alt="Publish your recipe for FREE today" width="566" height="208" loading="lazy">
+    <h1 class="display-5 fw-bold">Publish your recipe for FREE today</h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead mb-4">Publish your Recipe in front of thousands of people for free.</p>
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        <a href="/submit-recipe" class="btn btn-primary btn-dark btn-lg">Submit Recipe</a>
+      </div>
+    </div>
+  </section>
+<% } %>

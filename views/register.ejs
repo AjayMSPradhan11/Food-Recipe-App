@@ -81,7 +81,7 @@
         <h1>Register.</h1>
         <p>Please Register to enter Recipes.</p>
         <span>Do you have an account?</span>
-        <a href="/login"><button>Login</button></a>
+        <a href="/auth/login"><button>Login</button></a>
       </div>
       <div class="right">
         <h1>Register</h1>
@@ -114,14 +114,13 @@
             <option value="" disabled selected>Select your favorite cuisine</option>
             <option value="Nepali">Nepali</option>
             <option value="Chinese">Chinese</option>
-            <option value="Spanish">Spanish</option>
+            <option value="Thai">Thai</option>
             <option value="Indian">Indian</option>
             <option value="American">American</option>
             <option value="Mexican">Mexican</option>
           </select>
           
           <div id="recommended-recipes" class="mt-4">
-            <!-- Recommended recipes-->
           </div>
           
           <% if (err) { %>
@@ -138,12 +137,11 @@
     document.getElementById('preferred_cuisine').addEventListener('change', function(event) {
       const selectedCategory = event.target.value;
       
-      // Content-based filtering algorithm
       fetch(`/api/recipes/category/${selectedCategory}`)
         .then(response => response.json())
         .then(data => {
           const recommendedSection = document.getElementById('recommended-recipes');
-          recommendedSection.innerHTML = ''; // Clear any previous recommendations
+          recommendedSection.innerHTML = '';
           
           if (data && data.recipes && data.recipes.length > 0) {
             data.recipes.forEach(recipe => {

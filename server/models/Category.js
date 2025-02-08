@@ -41,6 +41,22 @@ class Category {
     const result = await db.query('DELETE FROM categories WHERE id = ?', [id]);
     return result;
   }
+
+  // Add new categories
+  static async addNewCategories() {
+    const categories = [
+      new Category('Nepali', 'path/to/nepali/image.jpg'),
+      new Category('Indian', 'path/to/indian/image.jpg'),
+      new Category('Thai', 'path/to/thai/image.jpg'),
+      new Category('Chinese', 'path/to/chinese/image.jpg'),
+      new Category('American', 'path/to/american/image.jpg'),
+      new Category('Mexican', 'path/to/mexican/image.jpg')
+    ];
+    
+    for (const category of categories) {
+      await category.save();
+    }
+  }
 }
 
 module.exports = Category;

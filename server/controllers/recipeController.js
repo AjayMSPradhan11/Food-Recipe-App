@@ -76,12 +76,12 @@ exports.submitRecipeOnPost = async (req, res) => {
       });
     }
 
-    const newRecipe = await Recipe.create({
+    const newRecipe = await Recipe.save({
       name: req.body.name,
       description: req.body.description,
       email: req.body.email,
       ingredients: req.body.ingredients,
-      category: req.body.category,
+      category: ['Nepali', 'Indian', 'Thai', 'Chinese', 'American', 'Mexican'].includes(req.body.category) ? req.body.category : 'Other',
       image: newImageName,
     });
 

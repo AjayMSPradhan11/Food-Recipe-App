@@ -20,18 +20,27 @@ app.use(cookieParser(process.env.COOKIE_SECRET || 'defaultCookieSecret'));
 app.use(session({
   secret: process.env.SECRET || 'defaultSessionSecret',
   saveUninitialized: true,
-  resave: true
+  resave: true,
 }));
 
 app.use(flash());
-
 app.use(fileUpload());
 
 app.set('layout', './layouts/main');
 app.set('view engine', 'ejs');
 
-app.use('/', recipeRoutes); 
-app.use('/auth', authRoutes); 
+app.use((req, res, next) => {
+  res.locals.user = req.session.user || null;
+  next();
+});
+
+app.use('/', recipeRoutes);
+app.use('/auth', authRoutes);
+
+app.get('/', (req, res) => {
+  const userLoggedIn = req.session.user ? true : false;
+  res.render('home', { userLoggedIn });
+});
 
 app.use((req, res) => {
   res.status(404).render('error', { message: 'Page not found.' });
@@ -44,9 +53,4 @@ app.use((err, req, res, next) => {
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
-});
-
-app.get('/', (req, res) => {
-  const userLoggedIn = req.session.user ? true : false;
-  res.render('home', { userLoggedIn });
 });

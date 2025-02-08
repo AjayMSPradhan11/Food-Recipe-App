@@ -1,7 +1,6 @@
 const db = require("../models/database"); 
 const { computePearsonCorrelation, getRecommendations } = require('../routes/authRoutes');
 
-
 async function getRecommendations(userPreferences) {
   const allUsers = await db.query("SELECT id, preferred_cuisines FROM users");
 
