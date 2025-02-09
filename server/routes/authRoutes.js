@@ -17,7 +17,7 @@ router.post("/register", async (req, res) => {
     const existingUser = await db.query("SELECT * FROM users WHERE email = ?", [email]);
     if (existingUser.length > 0) {
       return res.render("register", { err: "Email already in use." });
-    }
+    }    
 
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
@@ -79,17 +79,19 @@ router.get("/logout", (req, res) => {
   });
 });
 
-// Function to compute Pearson Correlation using shared categories
-function computePearsonCorrelation(category1, category2) {
-  const keys = Object.keys(category1);
+// Function to compute Pearson Correlation 
+const { correlation } = require('ml-stat/array');
 
-  const sum1 = keys.reduce((sum, key) => sum + category1[key], 0);
-  const sum2 = keys.reduce((sum, key) => sum + category2[key], 0);
+function computePearsonCorrelation(user1Preferences, user2Preferences) {
+  const keys = Object.keys(user1Preferences);
 
-  const sum1Sq = keys.reduce((sum, key) => sum + category1[key] ** 2, 0);
-  const sum2Sq = keys.reduce((sum, key) => sum + category2[key] ** 2, 0);
+  const sum1 = keys.reduce((sum, key) => sum + user1Preferences[key], 0);
+  const sum2 = keys.reduce((sum, key) => sum + user2Preferences[key], 0);
 
-  const pSum = keys.reduce((sum, key) => sum + category1[key] * category2[key], 0);
+  const sum1Sq = keys.reduce((sum, key) => sum + user1Preferences[key] ** 2, 0);
+  const sum2Sq = keys.reduce((sum, key) => sum + user2Preferences[key] ** 2, 0);
+
+  const pSum = keys.reduce((sum, key) => sum + user1Preferences[key] * user2Preferences[key], 0);
 
   const num = pSum - (sum1 * sum2) / keys.length;
   const den = Math.sqrt(
@@ -99,30 +101,45 @@ function computePearsonCorrelation(category1, category2) {
   return den === 0 ? 0 : num / den;
 }
 
-// Function to get recommendations based on user preferences
-async function getRecommendations(userPreferences) {
-  const allUsers = await db.query("SELECT id, preferred_cuisine FROM users");
 
-  const similarityScores = allUsers.map(user => {
-    const userPrefs = JSON.parse(user.preferred_cuisine); // Assuming it's stored as JSON
+// Function to get recommendations based on user preferences
+async function getRecommendations(userId) {
+  const user = await db.query("SELECT preferred_cuisine FROM users WHERE id = ?", [userId]);
+  if (!user.length) return [];
+
+  const userPreferences = JSON.parse(user[0].preferred_cuisine);
+
+  const allUsers = await db.query("SELECT id, preferred_cuisine FROM users WHERE id != ?", [userId]);
+
+  const similarityScores = allUsers.map(otherUser => {
+    const otherPreferences = JSON.parse(otherUser.preferred_cuisine);
     return {
-      userId: user.id,
-      similarity: computePearsonCorrelation(userPreferences, userPrefs),
+      userId: otherUser.id,
+      similarity: computePearsonCorrelation(userPreferences, otherPreferences),
     };
   });
 
   similarityScores.sort((a, b) => b.similarity - a.similarity);
 
+  if (similarityScores.length === 0) return [];
+
   const topUser = allUsers.find(u => u.id === similarityScores[0].userId);
   const topUserPreferences = JSON.parse(topUser.preferred_cuisine);
 
-  const recommendations = Object.keys(topUserPreferences)
-    .filter(recipe => !userPreferences[recipe] && topUserPreferences[recipe] > 0)
-    .map(recipeId => ({
-      id: recipeId,
-      name: getRecipeNameById(recipeId), // Implement this function based on your recipe storage
-      image: getRecipeImageById(recipeId), // Implement this function based on your recipe storage
-    }));
+  const userCategory = await db.query(
+    "SELECT category_by_region FROM users WHERE id = ?",
+    [userId]
+  );
+
+  const recommendations = await db.query(
+    `SELECT r.id, r.name, r.image_url 
+     FROM recipes r 
+     JOIN categories c ON r.category_by_region = c.category_by_region 
+     WHERE c.category_by_region = ? 
+     ORDER BY RAND() 
+     LIMIT 5`,
+    [userCategory[0].category_by_region]
+  );
 
   return recommendations;
 }

@@ -5,7 +5,7 @@ class Recipe {
     this.name = name;
     this.description = description;
     this.email = email;
-    this.ingredients = ingredients;  // This will be an array, so we store it as a JSON string in MySQL
+    this.ingredients = ingredients;
     this.category = category;
     this.image = image;
   }

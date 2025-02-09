@@ -24,7 +24,7 @@ class Category {
   // Fetch a category by its ID
   static async findById(id) {
     const [rows] = await db.query('SELECT * FROM categories WHERE id = ?', [id]);
-    return rows[0];  // Return the first result (there should only be one)
+    return rows[0]; 
   }
 
   // Update a category
