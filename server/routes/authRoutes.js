@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../models/database");
+const { correlation } = require('ml-stat/array');
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
@@ -57,11 +58,11 @@ router.post("/login", async (req, res) => {
       return res.render("login", { error: "Invalid username or password." });
     }
 
-    req.session.user = user[0]; // Store user session
+    req.session.user = user[0]; 
 
     console.log(`User logged in: ${username}`);
 
-    res.redirect("/"); // Redirect to home page after successful login
+    res.redirect("/"); 
   } catch (error) {
     console.error("Error during login:", error);
     res.render("login", { error: "Login failed. Please try again." });
@@ -74,13 +75,12 @@ router.get("/logout", (req, res) => {
     if (err) {
       return res.redirect("/");
     }
-    res.clearCookie("connect.sid"); // Clear session cookie
-    res.redirect("/auth/login"); // Redirect to login page
+    res.clearCookie("connect.sid"); 
+    res.redirect("/auth/login"); 
   });
 });
 
 // Function to compute Pearson Correlation 
-const { correlation } = require('ml-stat/array');
 
 function computePearsonCorrelation(user1Preferences, user2Preferences) {
   const keys = Object.keys(user1Preferences);

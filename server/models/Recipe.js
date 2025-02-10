@@ -1,4 +1,4 @@
-const db = require('./database');  // Assuming you have set up the database connection
+const db = require('./database'); 
 
 class Recipe {
   constructor(name, description, email, ingredients, category, image) {

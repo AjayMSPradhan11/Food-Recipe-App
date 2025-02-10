@@ -1,4 +1,4 @@
-const db = require('./database');  // Import the MySQL pool with promisified query method
+const db = require('./database'); 
 
 class Category {
   constructor(name, image) {

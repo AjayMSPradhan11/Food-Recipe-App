@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-const util = require('util'); // To promisify methods
+const util = require('util');
 
 // Create a MySQL pool
 const pool = mysql.createPool({
