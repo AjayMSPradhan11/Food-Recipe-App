@@ -1,0 +1,1 @@
+[RECIFREE The Cooking Blog including recommendation system through Pearson Correlation Coefficient.docx](https://github.com/user-attachments/files/18727780/RECIFREE.The.Cooking.Blog.including.recommendation.system.through.Pearson.Correlation.Coefficient.docx)
